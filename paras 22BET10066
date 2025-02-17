@@ -1,0 +1,114 @@
+Aim:Operating System-Based Question:
+This experiment combines data structures and operating system concepts, focusing on Linked Lists and OS-related problems.
+Objective:To implement and analyze Linked Lists in C++, demonstrating operations such as insertion, traversal, and memory management, while integrating concepts from Operating Systems like dynamic memory allocation and efficient data handling.
+#include <iostream>
+using namespace std;
+
+// Node class for linked list
+class Node {
+public:
+    int data;
+    Node* next;
+    
+    // Constructor
+    Node(int val) {
+        data = val;
+        next = NULL;
+    }
+};
+
+// LinkedList class
+class LinkedList {
+private:
+    Node* head;
+    
+public:
+    // Constructor
+    LinkedList() {
+        head = NULL;
+    }
+    
+    // Function to append a new node
+    void append(int val) {
+        Node* newNode = new Node(val);
+        
+        // If list is empty
+        if (head == NULL) {
+            head = newNode;
+            return;
+        }
+        
+        // Traverse to the last node
+        Node* current = head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        
+        // Add new node at the end
+        current->next = newNode;
+    }
+    
+    // Function to print the list
+    void printList() {
+        Node* current = head;
+        
+        // Traverse and print each node
+        while (current != NULL) {
+            cout << current->data;
+            if (current->next != NULL) {
+                cout << " ";
+            }
+            current = current->next;
+        }
+        cout << endl;
+    }
+    
+    // Destructor to free memory
+    ~LinkedList() {
+        Node* current = head;
+        while (current != NULL) {
+            Node* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+};
+
+// Main function
+int main() {
+    int T;
+    cout << "Enter number of test cases: ";
+    cin >> T;
+    
+    while (T--) {
+        LinkedList list;
+        int n;
+        cout << "Enter number of nodes: ";
+        cin >> n;
+        
+        if (n < 1 || n > 100000) {
+            cout << "Number of nodes must be between 1 and 10^5" << endl;
+            continue;
+        }
+        
+        cout << "Enter " << n << " values (1 to 10^6): ";
+        for (int i = 0; i < n; i++) {
+            int val;
+            cin >> val;
+            
+            if (val < 1 || val > 1000000) {
+                cout << "Values must be between 1 and 10^6" << endl;
+                return 1;
+            }
+            
+            list.append(val);
+        }
+        
+        cout << "Output: ";
+        list.printList();
+    }
+    
+    return 0;
+}   
+
+
